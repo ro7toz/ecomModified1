@@ -96,6 +96,35 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!-- JWT Dependencies -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-api</artifactId>
+				<version>0.11.5</version>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-impl</artifactId>
+				<version>0.11.5</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-jackson</artifactId>
+				<version>0.11.5</version>
+				<scope>runtime</scope>
+			</dependency>
+			<!-- Kafka -->
+			<dependency>
+				<groupId>org.springframework.kafka</groupId>
+				<artifactId>spring-kafka</artifactId>
+			</dependency>
+			<!-- Firebase Admin SDK -->
+			<dependency>
+				<groupId>com.google.firebase</groupId>
+				<artifactId>firebase-admin</artifactId>
+				<version>9.1.1</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	
@@ -110,6 +139,7 @@
 		<module>order-service</module>
 		<module>shipping-service</module>
 		<module>payment-service</module>
+		<module>notification-service</module>
 	</modules>
 	
 	<build>
@@ -123,7 +153,3 @@
 	</build>
 	
 </project>
-
-
-
-
