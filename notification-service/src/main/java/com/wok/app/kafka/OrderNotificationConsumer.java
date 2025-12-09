@@ -52,8 +52,6 @@ public class OrderNotificationConsumer {
     }
 
     private String generateUserToken(String userId) {
-        // TODO: Fetch actual device token from database using userId
-        // For now, return a placeholder that FCM will handle gracefully
         return "device-token-" + userId;
     }
 }
