@@ -46,7 +46,7 @@ services:
 
   # Service Discovery
   service-discovery-container:
-    image: selimhorri/service-discovery-ecommerce-boot:0.1.0
+    image: wok/service-discovery-ecommerce-boot:0.1.0
     container_name: service-discovery
     ports:
       - 8761:8761
@@ -57,7 +57,7 @@ services:
 
   # Config Server
   cloud-config-container:
-    image: selimhorri/cloud-config-ecommerce-boot:0.1.0
+    image: wok/cloud-config-ecommerce-boot:0.1.0
     container_name: cloud-config
     ports:
       - 9296:9296
@@ -68,12 +68,12 @@ services:
     networks:
       - ecommerce-network
 
-  # API Gateway
+  # API Gateway - FIXED PORT CONFLICT (was 8080, now 8200)
   api-gateway-container:
-    image: selimhorri/api-gateway-ecommerce-boot:0.1.0
+    image: wok/api-gateway-ecommerce-boot:0.1.0
     container_name: api-gateway
     ports:
-      - 8080:8080
+      - 8200:8200
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     depends_on:
@@ -84,10 +84,10 @@ services:
 
   # Business Services
   proxy-client-container:
-    image: selimhorri/proxy-client-ecommerce-boot:0.1.0
+    image: wok/proxy-client-ecommerce-boot:0.1.0
     container_name: proxy-client
     ports:
-      - 8900:8900
+      - 8085:8085
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     depends_on:
@@ -97,7 +97,7 @@ services:
       - ecommerce-network
 
   user-service-container:
-    image: selimhorri/user-service-ecommerce-boot:0.1.0
+    image: wok/user-service-ecommerce-boot:0.1.0
     container_name: user-service
     ports:
       - 8700:8700
@@ -109,7 +109,7 @@ services:
       - ecommerce-network
 
   order-service-container:
-    image: selimhorri/order-service-ecommerce-boot:0.1.0
+    image: wok/order-service-ecommerce-boot:0.1.0
     container_name: order-service
     ports:
       - 8701:8701
@@ -123,10 +123,10 @@ services:
       - ecommerce-network
 
   product-service-container:
-    image: selimhorri/product-service-ecommerce-boot:0.1.0
+    image: wok/product-service-ecommerce-boot:0.1.0
     container_name: product-service
     ports:
-      - 8500:8500
+      - 8710:8710
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     depends_on:
@@ -135,10 +135,10 @@ services:
       - ecommerce-network
 
   payment-service-container:
-    image: selimhorri/payment-service-ecommerce-boot:0.1.0
+    image: wok/payment-service-ecommerce-boot:0.1.0
     container_name: payment-service
     ports:
-      - 8400:8400
+      - 8080:8080
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     depends_on:
@@ -147,10 +147,10 @@ services:
       - ecommerce-network
 
   shipping-service-container:
-    image: selimhorri/shipping-service-ecommerce-boot:0.1.0
+    image: wok/shipping-service-ecommerce-boot:0.1.0
     container_name: shipping-service
     ports:
-      - 8600:8600
+      - 8082:8082
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     depends_on:
@@ -159,10 +159,10 @@ services:
       - ecommerce-network
 
   favourite-service-container:
-    image: selimhorri/favourite-service-ecommerce-boot:0.1.0
+    image: wok/favourite-service-ecommerce-boot:0.1.0
     container_name: favourite-service
     ports:
-      - 8800:8800
+      - 8083:8083
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     depends_on:
@@ -171,7 +171,7 @@ services:
       - ecommerce-network
 
   notification-service-container:
-    image: selimhorri/notification-service-ecommerce-boot:0.1.0
+    image: wok/notification-service-ecommerce-boot:0.1.0
     container_name: notification-service
     ports:
       - 8086:8086
