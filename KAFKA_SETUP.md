@@ -3,20 +3,34 @@
 ## 📦 Topic Creation
 
 ```bash
-# Enter Kafka container
-docker exec -it kafka bash
+#!/bin/bash
+
+# Kafka Topic Setup Script
+echo "Creating Kafka topics..."
+
+# Wait for Kafka to be ready
+echo "Waiting for Kafka to be ready..."
+sleep 10
 
 # Create notifications topic
-kafka-topics --create --topic notifications \
+docker exec -it kafka kafka-topics --create \
+  --topic notifications \
   --bootstrap-server localhost:9092 \
   --partitions 3 \
-  --replication-factor 1
+  --replication-factor 1 \
+  --if-not-exists
 
-# List topics
-kafka-topics --list --bootstrap-server localhost:9092
+# Verify topic creation
+echo "Verifying topic creation..."
+docker exec -it kafka kafka-topics --list \
+  --bootstrap-server localhost:9092
 
-# Describe topic
-kafka-topics --describe --topic notifications --bootstrap-server localhost:9092
+echo "Topic created successfully!"
+
+# Optional: Test producer
+echo "Testing Kafka producer (optional)..."
+echo "Run the following command to test:"
+echo "docker exec -it kafka kafka-console-producer --broker-list localhost:9092 --topic notifications"
 ```
 
 ## 🔍 Monitoring
