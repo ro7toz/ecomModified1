@@ -9,8 +9,10 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.wok.app.dto.OrderDto;
+import com.wok.app.event.OrderNotificationEvent;
 import com.wok.app.exception.wrapper.OrderNotFoundException;
 import com.wok.app.helper.OrderMappingHelper;
+import com.wok.app.kafka.NotificationProducer;
 import com.wok.app.repository.OrderRepository;
 import com.wok.app.service.OrderService;
 
@@ -55,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
 		OrderNotificationEvent event = new OrderNotificationEvent(
 			savedOrder.getOrderId().toString(),
 			orderDto.getCartDto() != null ? orderDto.getCartDto().getUserId().toString() : "unknown",
-			"user@example.com", // Fetch from user service
+			"user@example.com", // Fetch from user service if needed
 			"CREATED",
 			"Your order has been placed successfully",
 			LocalDateTime.now(),
@@ -86,16 +88,4 @@ public class OrderServiceImpl implements OrderService {
 		this.orderRepository.delete(OrderMappingHelper.map(this.findById(orderId)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
