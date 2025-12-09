@@ -41,7 +41,7 @@ public class OrderItemResource {
 			@PathVariable("productId") final String productId) {
 		log.info("*** OrderItemDto, resource; fetch orderItem by id *");
 		return ResponseEntity.ok(this.orderItemService.findById(
-				new OrderItemId(Integer.parseInt(orderId), Integer.parseInt(productId))));
+				new OrderItemId(Integer.parseInt(productId), Integer.parseInt(orderId))));
 	}
 	
 	@GetMapping("/find")
