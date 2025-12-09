@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderServiceImpl implements OrderService {
 	
 	private final OrderRepository orderRepository;
+	private final NotificationProducer notificationProducer;
 	
 	@Override
 	public List<OrderDto> findAll() {
@@ -46,8 +47,22 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public OrderDto save(final OrderDto orderDto) {
 		log.info("*** OrderDto, service; save order *");
-		return OrderMappingHelper.map(this.orderRepository
+		OrderDto savedOrder = OrderMappingHelper.map(this.orderRepository
 				.save(OrderMappingHelper.map(orderDto)));
+		
+		// Send notification event
+		OrderNotificationEvent event = new OrderNotificationEvent(
+			savedOrder.getOrderId().toString(),
+			orderDto.getCartDto() != null ? orderDto.getCartDto().getUserId().toString() : "unknown",
+			"user@example.com", // Fetch from user service
+			"CREATED",
+			"Your order has been placed successfully",
+			LocalDateTime.now(),
+			savedOrder.getOrderFee()
+		);
+		notificationProducer.sendOrderNotification(event);
+		
+		return savedOrder;
 	}
 	
 	@Override
