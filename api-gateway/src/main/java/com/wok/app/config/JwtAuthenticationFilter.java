@@ -26,7 +26,6 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         return (exchange, chain) -> {
             String path = exchange.getRequest().getPath().value();
             
-            // Skip auth for public endpoints
             if (isPublicEndpoint(path)) {
                 return chain.filter(exchange);
             }
