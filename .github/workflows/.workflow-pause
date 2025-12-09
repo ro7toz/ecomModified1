@@ -1,0 +1,7 @@
+# Workflow Pause Notice
+
+Individual service workflows have been temporarily disabled.
+
+Only master-build.yml is active.
+
+To prevent email spam and failed builds.
