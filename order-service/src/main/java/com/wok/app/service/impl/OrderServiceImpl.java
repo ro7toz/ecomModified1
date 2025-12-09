@@ -48,25 +48,27 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public OrderDto save(final OrderDto orderDto) {
-		log.info("*** OrderDto, service; save order *");
-		OrderDto savedOrder = OrderMappingHelper.map(this.orderRepository
-				.save(OrderMappingHelper.map(orderDto)));
-		
-		// Send notification event
-		OrderNotificationEvent event = new OrderNotificationEvent(
-			savedOrder.getOrderId().toString(),
-			orderDto.getCartDto() != null ? orderDto.getCartDto().getUserId().toString() : "unknown",
-			"user@example.com", // Fetch from user service if needed
-			"CREATED",
-			"Your order has been placed successfully",
-			LocalDateTime.now(),
-			savedOrder.getOrderFee()
-		);
-		notificationProducer.sendOrderNotification(event);
-		
-		return savedOrder;
-	}
+public OrderDto save(final OrderDto orderDto) {
+    log.info("*** OrderDto, service; save order *");
+    OrderDto savedOrder = OrderMappingHelper.map(this.orderRepository
+            .save(OrderMappingHelper.map(orderDto)));
+    
+    // Send notification event only if cart info is available
+    if (orderDto.getCartDto() != null && orderDto.getCartDto().getUserId() != null) {
+        OrderNotificationEvent event = new OrderNotificationEvent(
+            savedOrder.getOrderId().toString(),
+            orderDto.getCartDto().getUserId().toString(),
+            "user@example.com", // TODO: Fetch from user service
+            "CREATED",
+            "Your order has been placed successfully",
+            LocalDateTime.now(),
+            savedOrder.getOrderFee()
+        );
+        notificationProducer.sendOrderNotification(event);
+    }
+    
+    return savedOrder;
+}
 	
 	@Override
 	public OrderDto update(final OrderDto orderDto) {
