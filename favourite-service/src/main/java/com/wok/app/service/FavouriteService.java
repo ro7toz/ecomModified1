@@ -5,6 +5,7 @@ import java.util.List;
 import com.wok.app.domain.id.FavouriteId;
 import com.wok.app.dto.FavouriteDto;
 
+@Transactional
 public interface FavouriteService {
 	
 	List<FavouriteDto> findAll();
