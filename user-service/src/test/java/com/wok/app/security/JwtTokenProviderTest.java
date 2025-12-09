@@ -29,7 +29,7 @@ class JwtTokenProviderTest {
         
         assertNotNull(token);
         assertTrue(token.contains("."));
-        assertEquals(3, token.split("\\\."seule).length);
+        assertEquals(3, token.split("\\." ).length);
     }
 
     @Test
