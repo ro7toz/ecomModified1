@@ -21,22 +21,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
+@EntityListeners(AuditingEntityListener.class)  // ADD THIS
 abstract public class AbstractMappedEntity implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-	@CreatedDate
-	@JsonFormat(shape = Shape.STRING)
-	@Column(name = "created_at")
-	private Instant createdAt;
-	
-	@LastModifiedDate
-	@JsonFormat(shape = Shape.STRING)
-	@Column(name = "updated_at")
-	private Instant updatedAt;
-	
+    
+    @CreatedDate
+    @JsonFormat(shape = Shape.STRING)
+    @Column(name = "created_at")
+    private Instant createdAt;
+    
+    @LastModifiedDate
+    @JsonFormat(shape = Shape.STRING)
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 }
-
 
 
 
