@@ -26,7 +26,7 @@ public class CartDto implements Serializable {
 	private Integer userId;
 	
 	@JsonInclude(Include.NON_NULL)
-	@JsonIgnoreProperties("cartDto")  // ADD THIS to prevent circular reference
+	@JsonManagedReference
 	private Set orderDtos;
 	
 	@JsonProperty("user")
