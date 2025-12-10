@@ -42,7 +42,7 @@ public class OrderDto implements Serializable {
 	
 	@JsonProperty("cart")
 	@JsonInclude(Include.NON_NULL)
-	@JsonIgnoreProperties("orderDtos")  // ADD THIS to prevent circular reference
+	@JsonBackReference  // ADD THIS to prevent circular reference
 	private CartDto cartDto;
 }
 
