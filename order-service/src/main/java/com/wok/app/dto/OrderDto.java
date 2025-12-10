@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)  // ADD THIS
 public class OrderDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -41,13 +42,9 @@ public class OrderDto implements Serializable {
 	
 	@JsonProperty("cart")
 	@JsonInclude(Include.NON_NULL)
+	@JsonIgnoreProperties("orderDtos")  // ADD THIS to prevent circular reference
 	private CartDto cartDto;
-	
 }
-
-
-
-
 
 
 
