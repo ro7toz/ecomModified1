@@ -26,6 +26,8 @@ import lombok.NoArgsConstructor;
 @Data
 @EntityListeners(AuditingEntityListener.class)  // ADD THIS
 abstract public class AbstractMappedEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L; 
     
     @CreatedDate
     @JsonFormat(shape = Shape.STRING)
