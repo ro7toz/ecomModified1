@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Column;
-import javax.persistence.EntityListeners;  // ADD THIS IMPORT
+
+import javax.persistence.EntityListeners;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.MappedSuperclass;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;  // ADD THIS IMPORT
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
