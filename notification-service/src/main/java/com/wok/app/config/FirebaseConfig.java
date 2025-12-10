@@ -25,20 +25,18 @@ public class FirebaseConfig {
             try {
                 GoogleCredentials credentials = GoogleCredentials.fromStream(
                     new FileInputStream(firebaseConfigPath)
-                );
-
+            );
                 FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(credentials)
                     .build();
-
                 FirebaseApp.initializeApp(options);
                 log.info("Firebase initialized successfully");
             } catch (IOException e) {
                 log.warn("Firebase config file not found at: {}. FCM notifications will be disabled.", firebaseConfigPath);
-                return null;
-            }
+                return null;  // This is OK, but ensure consumers check for null
         }
-
-        return FirebaseMessaging.getInstance();
     }
+
+    return FirebaseMessaging.getInstance();
+}
 }
