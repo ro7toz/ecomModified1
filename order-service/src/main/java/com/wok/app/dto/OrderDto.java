@@ -16,6 +16,9 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.wok.app.constant.AppConstant;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;  // ADD THIS
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;  
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
