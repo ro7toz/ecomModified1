@@ -5,27 +5,24 @@
 ```bash
 #!/bin/bash
 
-# Kafka Topic Setup Script
 echo "Creating Kafka topics..."
-
-# Wait for Kafka to be ready
 echo "Waiting for Kafka to be ready..."
 sleep 10
 
-# Create notifications topic
-docker exec -it kafka kafka-topics --create \
+# Create notifications topic (remove -it flag for non-interactive)
+docker exec kafka kafka-topics --create \
   --topic notifications \
   --bootstrap-server localhost:9092 \
   --partitions 3 \
   --replication-factor 1 \
   --if-not-exists
 
-# Verify topic creation
 echo "Verifying topic creation..."
-docker exec -it kafka kafka-topics --list \
+docker exec kafka kafka-topics --list \
   --bootstrap-server localhost:9092
 
 echo "Topic created successfully!"
+
 
 # Optional: Test producer
 echo "Testing Kafka producer (optional)..."
