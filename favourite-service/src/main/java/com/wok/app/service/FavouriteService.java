@@ -1,7 +1,7 @@
 package com.wok.app.service;
 
 import java.util.List;
-
+import javax.transaction.Transactional;
 import com.wok.app.domain.id.FavouriteId;
 import com.wok.app.dto.FavouriteDto;
 
