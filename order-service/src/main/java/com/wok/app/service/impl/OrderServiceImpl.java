@@ -27,6 +27,7 @@ public class OrderServiceImpl implements OrderService {
 	
 	private final OrderRepository orderRepository;
 	private final NotificationProducer notificationProducer;
+	private final RestTemplate restTemplate;
 	
 	@Override
 	public List<OrderDto> findAll() {
@@ -51,29 +52,42 @@ public class OrderServiceImpl implements OrderService {
 	public OrderDto save(final OrderDto orderDto) {
 		log.info("*** OrderDto, service; save order *");
 		OrderDto savedOrder = OrderMappingHelper.map(this.orderRepository
-													 .save(OrderMappingHelper.map(orderDto)));
-    
-    // Send notification event only if cart info is available
+                                                 .save(OrderMappingHelper.map(orderDto)));
 		if (orderDto.getCartDto() != null && orderDto.getCartDto().getUserId() != null) {
 			try {
-				OrderNotificationEvent event = new OrderNotificationEvent(
-					savedOrder.getOrderId().toString(),
-					orderDto.getCartDto().getUserId().toString(),
-					"user@example.com", // TODO: Fetch from user service
-					"CREATED",
-					"Your order has been placed successfully",
-					LocalDateTime.now(),
-					savedOrder.getOrderFee()
-				);
-				notificationProducer.sendOrderNotification(event);
-			} catch (Exception e) {
-				log.error("Failed to send notification for order {}: {}", 
-						  savedOrder.getOrderId(), e.getMessage());
-            // Order is still saved even if notification fails
-			}
-		}
-		return savedOrder;
-	}
+            // FETCH USER EMAIL
+				String userEmail = "user@example.com"; // Default fallback
+				try {
+                // Inject RestTemplate if not present
+					UserDto user = restTemplate.getForObject(
+						AppConstant.DiscoveredDomainsApi.USER_SERVICE_API_URL + "/" + 
+						orderDto.getCartDto().getUserId(), 
+						UserDto.class
+                );
+                if (user != null && user.getEmail() != null) {
+                    userEmail = user.getEmail();
+            }
+            } catch (Exception e) {
+                log.warn("Could not fetch user email, using default: {}", e.getMessage());
+            }
+            
+            OrderNotificationEvent event = new OrderNotificationEvent(
+                savedOrder.getOrderId().toString(),
+                orderDto.getCartDto().getUserId().toString(),
+                userEmail,  // Use fetched email
+                "CREATED",
+                "Your order has been placed successfully",
+                LocalDateTime.now(),
+                savedOrder.getOrderFee()
+            );
+            notificationProducer.sendOrderNotification(event);
+        } catch (Exception e) {
+            log.error("Failed to send notification for order {}: {}", 
+                      savedOrder.getOrderId(), e.getMessage());
+        }
+    }
+    return savedOrder;
+}
 	
 	@Override
 	public OrderDto update(final OrderDto orderDto) {
