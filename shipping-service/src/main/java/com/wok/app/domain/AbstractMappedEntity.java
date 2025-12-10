@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
-import javax.persistence.EntityListeners;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,8 +23,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
-@EntityListeners(AuditingEntityListener.class)  // ADD THIS
+@EntityListeners(AuditingEntityListener.class)
 abstract public class AbstractMappedEntity implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     @CreatedDate
     @JsonFormat(shape = Shape.STRING)
@@ -37,12 +38,3 @@ abstract public class AbstractMappedEntity implements Serializable {
     @Column(name = "updated_at")
     private Instant updatedAt;
 }
-
-
-
-
-
-
-
-
-
