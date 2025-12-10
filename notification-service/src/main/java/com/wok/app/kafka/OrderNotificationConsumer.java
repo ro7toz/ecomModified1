@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderNotificationConsumer {
 
-    @Autowired(required = false)  // ADD required = false
+    @Autowired(required = false)
     private FirebaseMessaging firebaseMessaging;
 
     @KafkaListener(
@@ -23,11 +23,8 @@ public class OrderNotificationConsumer {
             log.info("Order Status: {}, Message: {}", event.getStatus(), event.getMessage());
             log.info("User Email: {}, Total Amount: {}", event.getUserEmail(), event.getTotalAmount());
             
-            // ADD NULL CHECK
             if (firebaseMessaging != null) {
-                // TODO: Implement FCM notification sending
-            } else {
-                log.debug("Firebase messaging not configured, skipping FCM notification");
+                // TODO: Implement FCM notification sending when Firebase config is available
             }
         } catch (Exception e) {
             log.error("Failed to process notification for order {}: {}", 
